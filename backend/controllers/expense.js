@@ -1,15 +1,15 @@
 
-const IncomeSchema = require('../models/incomeModel')
+const ExpenseSchema = require('../models/expenseModel')
 
-const addIncome = async (req, res) => {
+const addExpense = async (req, res) => {
     const { title, amount, category, description, date } = req.body
 
-    const income = IncomeSchema({
+    const expense = ExpenseSchema({
         title,
         amount,
         category,
         description,
-        date
+        date,
 
     })
 
@@ -25,32 +25,32 @@ const addIncome = async (req, res) => {
 
             return res.status(400).json({ message: 'Invalid input for number' })
         }
-        await income.save()
-        console.log('Income saved:', income);
-        res.status(200).json({ message: 'Income Added' })
+        await expense.save()
+        console.log('expense saved:', expense);
+        res.status(200).json({ message: 'Expense Added' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' })
 
     }
-    console.log(income)
+    console.log(expense)
 }
 
-const getIncomes = async (req, res) => {
+const getExpense = async (req, res) => {
 
     try {
-        const incomes = await IncomeSchema.find().sort({ createdAt: -1 })
-        res.status(200).json(incomes)
+        const expenses = await ExpenseSchema.find().sort({ createdAt: -1 })
+        res.status(200).json(expenses)
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' })
     }
 }
 
-const deleteIncomes = async (req, res) => {
+const deleteExpenses = async (req, res) => {
 
     const { id } = req.params;
     console.log(req.params)
 }
 
-module.exports = { addIncome, getIncomes, deleteIncomes }
+module.exports = { addExpense, getExpense, deleteExpenses }
